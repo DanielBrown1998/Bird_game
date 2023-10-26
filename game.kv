@@ -1,0 +1,121 @@
+<Login@MDScreen>:
+    id: login
+    md_bg_color: app.theme_cls.primary_color
+    Image:
+        allow_stretch: True
+        source: './login.png'
+        size_hint: 1., 1.
+    MDLabel:
+        pos_hint: {"center_x": .5, "center_y": .6}
+        text: 'HashBird'
+        valign: 'center'
+        halign: 'center'
+        font_name: 'Skranji'
+        theme_text_color: 'Custom'
+        text_color: .2, 1, 0, 1
+        font_size: '80sp'
+
+    MDFillRoundFlatButton:
+        text: 'Start'
+        on_release: app.root.current = 'game'
+        pos_hint: {"center_x": .7, "center_y": .3}
+        theme_text_color: 'Custom'
+        text_color: 1, 1, 1, 1
+
+    MDFillRoundFlatButton:
+        text: 'Exit'
+        on_release: app.stop()
+        pos_hint: {"center_x": .3, "center_y": .3}
+        theme_text_color: 'Custom'
+        text_color: 1, 1, 1, 1
+
+<GameOver@MDScreen>:
+    id: over
+    Image:
+        allow_stretch: True
+        source: './gameover.png'
+        size_hint: 1., 1.
+
+    MDFillRoundFlatButton:
+        text: 'Try Again'
+        md_bg_color: 1, .1, .1, 1
+        on_release: app.root.current = 'game'
+        pos_hint: {"center_x": .7, "center_y": .3}
+        theme_text_color: 'Custom'
+        text_color: 1, 1, 1, 1
+
+    MDFillRoundFlatButton:
+        text: 'Exit'
+        md_bg_color: 1, .1, .1, 1
+        on_release: app.stop()
+        pos_hint: {"center_x": .3, "center_y": .3}
+        theme_text_color: 'Custom'
+        text_color: 1, 1, 1, 1
+
+<Obstacle@Widget>:
+    id: obstacle
+    size_hint: None, None
+#    width: '100dp'
+#    height: '500dp'
+    spacing: "0dp"
+    padding: "0dp"
+
+    canvas:
+        Color:
+            rgba: self.color
+        Rectangle:
+            size: self.width, self.height
+            pos: self.pos
+
+
+<Player@Widget>:
+    id: player
+
+
+<Game@MDScreen>:
+    id: game
+    size_hint: 1., 1.
+    md_bg_color: app.theme_cls.primary_color
+    Image:
+        source: './fundo_game.png'
+        allow_stretch: True
+        size_hint: 1., 1.
+    FloatLayout:
+        size_hint: None, None
+        y: root.height
+        x: root.width
+
+        MDLabel:
+            valign: 'top'
+            halign: 'center'
+            text: f'Score {int(root.score)}'
+            font_size: '30sp'
+            bold: True
+            size_hint_y: None
+            height: self.font_size
+            y: root.height*.95-self.height
+        Player:
+            allow_stretch: True
+            id: player
+            size_hint: None, None
+            width: '30dp'
+            height: "30dp"
+            x: root.width/20
+            y: root.height/2
+            Image:
+                source: './icon.png'
+                width: "60dp"
+                height: "60dp"
+                y: player.y - self.height/5
+                x: player.x - self.width/5
+                pos_hint: {"center_x": .5, "center_y": .5}
+
+
+
+<Principal@MDScreenManager>:
+    Login:
+        name: 'login'
+    Game:
+        name: 'game'
+    GameOver:
+        name: 'gameover'
